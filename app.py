@@ -3,7 +3,7 @@ import os
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-
+from dotenv import load_dotenv
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)  # Changez cette clé en production
@@ -50,8 +50,10 @@ def send_email(nom, email, message):
     # Configuration SMTP
     smtp_server = "smtp.gmail.com"
     smtp_port = 587
-    sender_email = "kasseabdou21@gmail.com"
-    sender_password = "lyco fhik vdne diqz"
+    sender_email = os.getenv("EMAIL_ADDRESS")
+    sender_password = os.getenv("EMAIL_PASSWORD")
+    print(sender_email)
+    print(sender_password)
     
     # Créer le message
     msg = MIMEMultipart()
@@ -61,7 +63,6 @@ def send_email(nom, email, message):
     
     body = f"""
     Nouveau message reçu via le portfolio :
-    
     Nom: {nom}
     Email: {email}
     Message: {message}
